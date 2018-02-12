@@ -4,14 +4,29 @@ const express = require('express');
 
 const app = express();
 const router = express.Router();
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const config = require('./config');
 
-let route = router.get('/', (req, res, next) => {
-    res.status(200).send({
-        title: "Wit Idiomas API",
-        version: "1.0.0"
-    });
-});
+//Connect DB
+mongoose.connect(config.connectionString, {
+    auth: {
+      user: config.userMongo,
+      password: config.passwordMongo
+    }
+  })
+  .then(() => console.log('connection successful'))
+  .catch((err) => console.error(err));
+  
+//Import Routers
+const indexRoute = require('./routes/index-route');
+const adminRoute = require('./routes/admin-route');
 
-app.use('/', route);
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use('/', indexRoute);
+app.use('/admin', adminRoute);
 
 module.exports = app;
