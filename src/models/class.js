@@ -6,16 +6,16 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
     name: {
         type: String,
-        require: true
+        required: true
     },
     schedule: {
         type: String,
-        require: true,
+        required: true,
         unique: true
     },
     daysOfWeek: {
         type: String,
-        require: true
+        required: true
     },
     active: {
         type: String,

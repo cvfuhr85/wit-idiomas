@@ -6,16 +6,16 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
     name: {
         type: String,
-        require: true
+        required: true
     },
     email: {
         type: String,
-        require: true,
+        required: true,
         unique: true
     },
     password: {
         type: String,
-        require: true
+        required: true
     },
     classes: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -26,7 +26,7 @@ const schema = new Schema({
     },
     points: {
         type: Number,
-        require: true,
+        required: true,
         default: 0
     },
     active: {

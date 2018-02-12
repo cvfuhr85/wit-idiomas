@@ -11,7 +11,7 @@ const schema = new Schema({
     },
     title: {
         type: String,
-        require: true
+        required: true
     },
     description: {
         type: String
@@ -29,11 +29,11 @@ const schema = new Schema({
     }],
     points: {
         type: Number,
-        require: true
+        required: true
     },
     duration: {
-        type: number,
-        require: true
+        type: Number,
+        required: true
     },
     active: {
         type: String,

@@ -1,5 +1,37 @@
 'use strict'
 
-exports.post = (req, res, next) => {
-    res.status(201).send(req.body);
+// const mongoose = require('mongoose');
+// const Admin = mongoose.model('Admin');
+const repository = require('../repositories/admin-repositoy');
+const ValidationContract = require('../validators/fluent-validator');
+
+exports.create = (req, res, next) => {
+    let contract = new ValidationContract();
+    contract.hasMinLen(req.body.name, 3, 'O nome deve ter pelo menos 3 caracteres')
+    contract.isEmail(req.body.email, 'E-mail invalido')
+    contract.hasMinLen(req.body.password, 6, 'A senha deve ter pelo menos 6 caracteres')
+    contract.isEqual(req.body.password, req.body.confirmPassword, 'As senhas não conferem')
+
+    if (!contract.isValid()) {
+        res.status(400).send(contract.errors()).end();
+        return;
+    }
+
+    repository.
+        create({
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password
+        })
+        .then(x => {
+            res.status(201).send({
+                message: 'Administrador cadastrado com sucesso'
+            });
+        }).catch(e => {
+            res.status(400).send({
+                message: 'Falha ao cadastrar administrador',
+                data: e
+            });
+        });
+
 };

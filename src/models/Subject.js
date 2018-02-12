@@ -11,12 +11,12 @@ const schema = new Schema({
     },
     link: {
         type: String,
-        require: true
+        required: true
     },
     classes: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Class',
-        require: true
+        required: true
     }],
     active: {
         type: String,

@@ -11,7 +11,7 @@ const schema = new Schema({
     },
     title: {
         type: String,
-        require: true
+        required: true
     },
     correctChoice: {
         type: String,

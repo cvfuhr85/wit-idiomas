@@ -18,6 +18,15 @@ mongoose.connect(config.connectionString, {
   .then(() => console.log('connection successful'))
   .catch((err) => console.error(err));
   
+//Import models
+const Admin = require('./models/admin');
+const Class = require('./models/class');
+const Student = require('./models/student');
+const Subject = require('./models/subject');
+const Exercise = require('./models/exercice');
+const Challenge = require('./models/challenge');
+const Interaction = require('./models/interaction');
+
 //Import Routers
 const indexRoute = require('./routes/index-route');
 const adminRoute = require('./routes/admin-route');
