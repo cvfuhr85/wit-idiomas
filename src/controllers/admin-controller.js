@@ -2,7 +2,7 @@
 
 // const mongoose = require('mongoose');
 // const Admin = mongoose.model('Admin');
-const repository = require('../repositories/admin-repositoy');
+const repository = require('../repositories/admin-repository');
 const ValidationContract = require('../validators/fluent-validator');
 
 exports.create = async (req, res, next) => {

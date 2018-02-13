@@ -21,15 +21,16 @@ mongoose.connect(config.connectionString, {
 //Import models
 const Admin = require('./models/admin');
 const Class = require('./models/class');
-const Student = require('./models/student');
-const Subject = require('./models/subject');
-const Exercise = require('./models/exercice');
-const Challenge = require('./models/challenge');
-const Interaction = require('./models/interaction');
+// const Student = require('./models/student');
+// const Subject = require('./models/subject');
+// const Exercise = require('./models/exercice');
+// const Challenge = require('./models/challenge');
+// const Interaction = require('./models/interaction');
 
 //Import Routers
 const indexRoute = require('./routes/index-route');
 const adminRoute = require('./routes/admin-route');
+const classRoute = require('./routes/class-route');
 
 
 app.use(bodyParser.json());
@@ -37,5 +38,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', indexRoute);
 app.use('/admin', adminRoute);
+app.use('/class', classRoute);
 
 module.exports = app;

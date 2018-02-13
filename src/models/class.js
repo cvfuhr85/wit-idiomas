@@ -10,8 +10,7 @@ const schema = new Schema({
     },
     schedule: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     daysOfWeek: {
         type: String,
