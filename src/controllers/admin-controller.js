@@ -5,7 +5,7 @@
 const repository = require('../repositories/admin-repositoy');
 const ValidationContract = require('../validators/fluent-validator');
 
-exports.create = (req, res, next) => {
+exports.create = async (req, res, next) => {
     let contract = new ValidationContract();
     contract.hasMinLen(req.body.name, 3, 'O nome deve ter pelo menos 3 caracteres')
     contract.isEmail(req.body.email, 'E-mail invalido')
@@ -17,21 +17,16 @@ exports.create = (req, res, next) => {
         return;
     }
 
-    repository.
-        create({
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password
-        })
-        .then(x => {
-            res.status(201).send({
-                message: 'Administrador cadastrado com sucesso'
+    try {
+        await repository
+            .create({
+                name: req.body.name,
+                email: req.body.email,
+                password: req.body.password
             });
-        }).catch(e => {
-            res.status(400).send({
-                message: 'Falha ao cadastrar administrador',
-                data: e
-            });
-        });
+        res.status(201).send({ message: 'Administrador cadastrado com sucesso' });
+    } catch(e) {
+        res.status(500).send({ message: 'Falha ao processar requisição'});
+    }
 
 };
