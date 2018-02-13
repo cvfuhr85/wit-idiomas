@@ -21,7 +21,7 @@ mongoose.connect(config.connectionString, {
 //Import models
 const Admin = require('./models/admin');
 const Class = require('./models/class');
-// const Student = require('./models/student');
+const Student = require('./models/student');
 // const Subject = require('./models/subject');
 // const Exercise = require('./models/exercice');
 // const Challenge = require('./models/challenge');
@@ -31,6 +31,7 @@ const Class = require('./models/class');
 const indexRoute = require('./routes/index-route');
 const adminRoute = require('./routes/admin-route');
 const classRoute = require('./routes/class-route');
+const studentRoute = require('./routes/student-route');
 
 
 app.use(bodyParser.json());
@@ -39,5 +40,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', indexRoute);
 app.use('/admin', adminRoute);
 app.use('/class', classRoute);
+app.use('/student', studentRoute);
 
 module.exports = app;

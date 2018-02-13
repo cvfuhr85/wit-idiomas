@@ -18,8 +18,7 @@ exports.update = async (id, data) => {
         $set: {
             name: data.name,
             schedule: data.schedule,
-            daysOfWeek: data.daysOfWeek,
-            active: data.active
+            daysOfWeek: data.daysOfWeek
         }
     });
 }
