@@ -23,7 +23,7 @@ const Admin = require('./models/admin');
 const Class = require('./models/class');
 const Student = require('./models/student');
 const Subject = require('./models/subject');
-// const Exercise = require('./models/exercice');
+const Exercise = require('./models/exercice');
 // const Challenge = require('./models/challenge');
 // const Interaction = require('./models/interaction');
 
@@ -33,6 +33,7 @@ const adminRoute = require('./routes/admin-route');
 const classRoute = require('./routes/class-route');
 const studentRoute = require('./routes/student-route');
 const subjectRoute = require('./routes/subject-route');
+const exerciseRoute = require('./routes/exercise-route');
 
 
 app.use(bodyParser.json());
@@ -43,5 +44,6 @@ app.use('/admin', adminRoute);
 app.use('/class', classRoute);
 app.use('/student', studentRoute);
 app.use('/subject', subjectRoute);
+app.use('/exercise', exerciseRoute);
 
 module.exports = app;

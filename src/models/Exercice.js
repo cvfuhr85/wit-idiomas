@@ -13,9 +13,14 @@ const schema = new Schema({
         type: String,
         required: true
     },
-    correctChoice: {
+    description: {
+        type: String
+    },
+    choices: [{
         type: String,
-        enum: ['A', 'B', 'C', 'D', 'E']
+    }],
+    correctChoice: {
+        type: String
     },
     correctAnswer: {
         type: String
