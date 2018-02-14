@@ -16,9 +16,11 @@ const schema = new Schema({
     description: {
         type: String
     },
+    choices: [{
+        type: String,
+    }],
     correctChoice: {
         type: String,
-        enum: ['A', 'B', 'C', 'D', 'E']
     },
     correctAnswer: {
         type: String
@@ -40,6 +42,11 @@ const schema = new Schema({
         required: true,
         enum: ['active', 'deactivated'],
         default: 'active'
+    },
+    createDate: {
+        type: Date,
+        required: true,
+        default: Date.now
     }
 });
 

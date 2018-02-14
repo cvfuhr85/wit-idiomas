@@ -1,6 +1,6 @@
 'use strict'
 
-const repository = require('../repositories/exercise-repository');
+const repository = require('../repositories/challenge-repository');
 const ValidationContract = require('../validators/fluent-validator');
 
 exports.get = async (req, res, next) => {
@@ -38,9 +38,11 @@ exports.create = async (req, res, next) => {
                 choices: req.body.choices,
                 correctChoice: req.body.correctChoice,
                 correctAnswer: req.body.correctAnswer,
-                classes: req.body.classes
+                classes: req.body.classes,
+                points: req.body.points,
+                duration: req.body.duration
             });
-        res.status(201).send({ message: 'Exercício cadastrado com sucesso' });
+        res.status(201).send({ message: 'Desafio cadastrado com sucesso' });
     } catch (e) { catchError(e, res); }
 };
 
@@ -57,16 +59,18 @@ exports.update = async (req, res, next) => {
             choices: req.body.choices,
             correctChoice: req.body.correctChoice,
             correctAnswer: req.body.correctAnswer,
-            classes: req.body.classes
+            classes: req.body.classes,
+            points: req.body.points,
+            duration: req.body.duration
         });
-        res.status(200).send({ message: 'Exercício atualizado com sucesso' });
+        res.status(200).send({ message: 'Desafio atualizado com sucesso' });
     } catch (e) { catchError(e, res); }
 }
 
 exports.active = async (req, res, next) => {
     try {
         await repository.active(req.params.id, { active: req.body.active });
-        res.status(200).send({ message: 'Exercício atualizado com sucesso' });
+        res.status(200).send({ message: 'Desafio atualizado com sucesso' });
     } catch (e) { catchError(e, res); }
 }
 
@@ -81,7 +85,7 @@ function validatorContract(data, res) {
     let contract = new ValidationContract();
     contract.hasMinLen(data.title, 3, 'O titulo deve ter pelo menos 3 caracteres')
     contract.hasMaxLen(data.title, 30, 'O titulo deve ter no máximo 30 caracteres'),
-    contract.hasMinLen(data.description, 3, 'A descrição deve ter pelo menos 3 caracteres')
+        contract.hasMinLen(data.description, 3, 'A descrição deve ter pelo menos 3 caracteres')
 
     if (!contract.isValid()) {
         res.status(400).send(contract.errors()).end();
