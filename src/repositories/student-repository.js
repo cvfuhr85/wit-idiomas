@@ -17,7 +17,7 @@ exports.getById = async (id) => {
 
 exports.getByClass = async (id) => {
     const res = await Student.find({
-        class: id,
+        classes: id,
         active: 'active'
     }, 'name email');
     return res;
@@ -46,15 +46,18 @@ exports.active = async (id, data) => {
 
 exports.addPoints = async (id, data) => {
     await Student.findByIdAndUpdate(id, {
-        // $set: { points: points + data.points }
-        // $inc: { points: data.points}
         $inc: { points: parseInt(data.points)}
     });
 }
 
 exports.addClass = async (id, data) => {
     await Student.findByIdAndUpdate(id, {
-        // $set: { classes: classes + data.class }
         $push: {classes: data.class}
+    });
+}
+
+exports.removeClass = async (id, data) => {
+    await Student.findByIdAndUpdate(id, {
+        $pull: {classes: data.class}
     });
 }
