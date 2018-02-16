@@ -33,7 +33,8 @@ exports.update = async (id, data) => {
         $set: {
             name: data.name,
             email: data.email,
-            password: data.password
+            password: data.password,
+            photo: data.photo
         }
     });
 }
