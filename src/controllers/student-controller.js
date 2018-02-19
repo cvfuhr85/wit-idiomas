@@ -65,8 +65,6 @@ exports.update = async (req, res, next) => {
         }
     });
 
-    console.log( 'https://witteststorage.blob.core.windows.net/student-images/' + fileName);
-
     try {
         await repository.update(req.params.id, {
             name: req.body.name,

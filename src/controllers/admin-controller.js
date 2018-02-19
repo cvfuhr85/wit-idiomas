@@ -4,6 +4,8 @@
 // const Admin = mongoose.model('Admin');
 const repository = require('../repositories/admin-repository');
 const ValidationContract = require('../validators/fluent-validator');
+const md5 = require('md5');
+const authService = require('../services/auth-service');
 
 exports.create = async (req, res, next) => {
     let contract = new ValidationContract();
@@ -22,11 +24,43 @@ exports.create = async (req, res, next) => {
             .create({
                 name: req.body.name,
                 email: req.body.email,
-                password: req.body.password
+                password: md5(req.body.password + global.SALT_KEY)
             });
         res.status(201).send({ message: 'Administrador cadastrado com sucesso' });
-    } catch(e) {
-        res.status(500).send({ message: 'Falha ao processar requisição'});
+    } catch (e) {
+        res.status(500).send({ message: 'Falha ao processar requisição' });
+    }
+
+};
+
+exports.authenticate = async (req, res, next) => {
+    try {
+        let admin = await repository
+            .authenticate({
+                email: req.body.email,
+                password: md5(req.body.password + global.SALT_KEY)
+            });
+        
+        if (!admin){
+            res.status(404).send({ message: 'Usuário ou senha inválidos.' });
+        }
+        
+        let token = await authService.generateToken({
+            email: admin.email,
+            name: admin.name
+        });
+
+
+        res.status(201).send({ 
+            token: token,
+            data: {
+                name: admin.name,
+                email: admin.email
+            }
+        });
+
+    } catch (e) {
+        res.status(500).send({ message: 'Falha ao processar requisição' });
     }
 
 };
