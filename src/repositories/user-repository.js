@@ -1,15 +1,15 @@
 'use strict'
 
 const mongoose = require('mongoose');
-const Admin = mongoose.model('Admin');
+const User = mongoose.model('User');
 
 exports.create = async (data) => {
-    let admin = new Admin(data);
-    await admin.save();
+    let user = new User(data);
+    await user.save();
 }
 
 exports.authenticate = async(data) => {
-    let res = await Admin.findOne({
+    let res = await User.findOne({
         email: data.email,
         password: data.password
     });

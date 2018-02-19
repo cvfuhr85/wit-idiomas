@@ -6,6 +6,7 @@ const md5 = require('md5');
 const azure = require('azure-storage');
 const config = require('../config');
 const guid = require('guid');
+const authService = require('../services/auth-service');
 
 exports.get = async (req, res, next) => {
     try {
@@ -34,14 +35,65 @@ exports.create = async (req, res, next) => {
     }
 
     try {
-        await repository
+        let student = await repository
             .create({
                 name: req.body.name,
                 email: req.body.email,
+                password: md5(req.body.password + global.SALT_KEY),
+                roles: ['user']
+            });
+
+        let token = await authService.generateToken({
+            id: student._id,
+            email: student.email,
+            name: student.name,
+            roles: student.roles
+        });
+
+
+        res.status(201).send({
+            token: token,
+            data: {
+                name: student.name,
+                email: student.email
+            }
+        });
+
+    } catch (e) { catchError(e, res); }
+};
+
+exports.authenticate = async (req, res, next) => {
+    try {
+        let student = await repository
+            .authenticate({
+                email: req.body.email,
                 password: md5(req.body.password + global.SALT_KEY)
             });
-        res.status(201).send({ message: 'Aluno cadastrado com sucesso' });
-    } catch (e) { catchError(e, res); }
+
+        if (!student) {
+            res.status(404).send({ message: 'Usuário ou senha inválidos.' });
+        }
+
+        let token = await authService.generateToken({
+            id: student._id,
+            email: student.email,
+            name: student.name,
+            roles: student.roles
+        });
+
+
+        res.status(201).send({
+            token: token,
+            data: {
+                name: student.name,
+                email: student.email
+            }
+        });
+
+    } catch (e) {
+        res.status(500).send({ message: 'Falha ao processar requisição' });
+    }
+
 };
 
 exports.update = async (req, res, next) => {
@@ -70,7 +122,7 @@ exports.update = async (req, res, next) => {
             name: req.body.name,
             email: req.body.email,
             password: req.body.password,
-            photo : 'https://witteststorage.blob.core.windows.net/student-images/' + fileName
+            photo: 'https://witteststorage.blob.core.windows.net/student-images/' + fileName
         });
         res.status(200).send({ message: 'Aluno atualizado com sucesso' });
     } catch (e) { catchError(e, res); }
@@ -109,6 +161,7 @@ function uploadPhoto(data) {
 }
 
 function catchError(e, res) {
+    
     res.status(500).send({
         message: 'Falha ao processar requisição',
         error: e

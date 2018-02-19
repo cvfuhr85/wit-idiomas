@@ -34,7 +34,13 @@ const schema = new Schema({
         required: true,
         enum: ['active', 'deactivated'],
         default: 'active'
-    }
+    },
+    roles: [{
+        type: String,
+        required: true,
+        enum: ['user', 'admin'],
+        default: 'user'
+    }]
 });
 
 module.exports = mongoose.model('Student', schema);

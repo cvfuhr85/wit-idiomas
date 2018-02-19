@@ -26,6 +26,7 @@ exports.getByClass = async (id) => {
 exports.create = async (data) => {
     let student = new Student(data);
     await student.save();
+    return student;
 }
 
 exports.update = async (id, data) => {
@@ -61,4 +62,13 @@ exports.removeClass = async (id, data) => {
     await Student.findByIdAndUpdate(id, {
         $pull: {classes: data.class}
     });
+}
+
+exports.authenticate = async(data) => {
+    let res = await User.findOne({
+        email: data.email,
+        password: data.password
+    });
+    
+    return res;
 }

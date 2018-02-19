@@ -22,7 +22,13 @@ const schema = new Schema({
         required: true,
         enum: ['active', 'deactivated'],
         default: 'active'
-    }
+    },
+    roles: [{
+        type: String,
+        required: true,
+        enum: ['user', 'admin'],
+        default: 'admin'
+    }]
 });
 
-module.exports = mongoose.model('Admin', schema);
+module.exports = mongoose.model('User', schema);
