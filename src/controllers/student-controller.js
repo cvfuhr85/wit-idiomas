@@ -101,28 +101,28 @@ exports.update = async (req, res, next) => {
         return;
     }
 
-    const blobService = azure.createBlobService(config.containerConnectionString);
+    // const blobService = azure.createBlobService(config.containerConnectionString);
 
-    let fileName = guid.raw().toString() + '.jpg';
-    let rawData = req.body.photo;
-    let matches = rawData.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-    let type = matches[1];
-    let buffer = new Buffer(matches[2], 'base64');
+    // let fileName = guid.raw().toString() + '.jpg';
+    // let rawData = req.body.photo;
+    // let matches = rawData.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+    // let type = matches[1];
+    // let buffer = new Buffer(matches[2], 'base64');
 
-    await blobService.createBlockBlobFromText('student-images', fileName, buffer, {
-        contentType: type
-    }, function (error, result, response) {
-        if (error) {
-            fileName = 'default-student.png'
-        }
-    });
+    // await blobService.createBlockBlobFromText('student-images', fileName, buffer, {
+    //     contentType: type
+    // }, function (error, result, response) {
+    //     if (error) {
+    //         fileName = 'default-student.png'
+    //     }
+    // });
 
     try {
         await repository.update(req.params.id, {
             name: req.body.name,
             email: req.body.email,
-            password: req.body.password,
-            photo: 'https://witteststorage.blob.core.windows.net/student-images/' + fileName
+            password: req.body.password
+            // photo: 'https://witteststorage.blob.core.windows.net/student-images/' + fileName
         });
         res.status(200).send({ message: 'Aluno atualizado com sucesso' });
     } catch (e) { catchError(e, res); }

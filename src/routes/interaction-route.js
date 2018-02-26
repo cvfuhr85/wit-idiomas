@@ -15,4 +15,4 @@ router.get('/correctanswer/:exerciseId/:studentId', authService.authorize, contr
 router.post('/', authService.authorize, controller.create);
 router.delete('/:id', authService.authorize, controller.delete);
 
-module.exports = router;
+module.exports = router; 
