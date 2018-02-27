@@ -7,7 +7,7 @@ const schema = new Schema({
     type: {
         type: String,
         required: true,
-        enum: ['favorite', 'comment', 'answer', 'correct']
+        enum: ['favorite', 'comment', 'answer', 'correct', 'incorrect']
     },
     text: {
         type: String
@@ -22,7 +22,7 @@ const schema = new Schema({
     },
     exercise: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Exercice'
+        ref: 'Exercise'
     },
     subject: {
         type: mongoose.Schema.Types.ObjectId,

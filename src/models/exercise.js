@@ -7,7 +7,7 @@ const schema = new Schema({
     type: {
         type: String,
         required: true,
-        enum: ['descriptive', 'multipleChoice']
+        enum: ['Descritiva', 'Multipla']
     },
     title: {
         type: String,

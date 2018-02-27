@@ -23,7 +23,7 @@ const User = require('./models/user');
 const Class = require('./models/class');
 const Student = require('./models/student');
 const Subject = require('./models/subject');
-const Exercise = require('./models/exercice');
+const Exercise = require('./models/exercise');
 const Challenge = require('./models/challenge');
 const Interaction = require('./models/interaction');
 

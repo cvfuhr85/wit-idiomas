@@ -41,7 +41,9 @@ exports.getAnswerByClass = async (classId, exerciseId) => {
         type: 'answer',
         exercise: exerciseId,
         class: classId
-    }, 'exercise student text');
+    }, 'exercise student text')
+    .populate('student', 'name')
+    .populate('exercise', 'title description');                                                                    
     return res;
 }
 
