@@ -19,7 +19,7 @@ exports.getByClass = async (id) => {
     const res = await Subject.find({
         classes: id,
         active: 'active'
-    }, 'title link');
+    }, 'title link type');
     return res;
 }
 
