@@ -25,10 +25,10 @@ const schema = new Schema({
     correctAnswer: {
         type: String
     },
-    classes: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Class'
-    }],
+    // classes: [{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'Class'
+    // }],
     points: {
         type: Number,
         required: true

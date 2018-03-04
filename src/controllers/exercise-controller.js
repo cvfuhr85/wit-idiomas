@@ -57,18 +57,13 @@ exports.update = async (req, res, next) => {
             choices: req.body.choices,
             correctChoice: req.body.correctChoice,
             correctAnswer: req.body.correctAnswer,
-            classes: req.body.classes
+            classes: req.body.classes,
+            active: req.body.active
         });
         res.status(200).send({ message: 'Exercício atualizado com sucesso' });
     } catch (e) { catchError(e, res); }
 }
 
-exports.active = async (req, res, next) => {
-    try {
-        await repository.active(req.params.id, { active: req.body.active });
-        res.status(200).send({ message: 'Exercício atualizado com sucesso' });
-    } catch (e) { catchError(e, res); }
-}
 
 function catchError(e, res) {
     res.status(500).send({

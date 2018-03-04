@@ -4,22 +4,19 @@ const mongoose = require('mongoose');
 const Exercise = mongoose.model('Exercise');
 
 exports.get = async () => {
-    const res = await Exercise.find({
-        active: 'active'
-    }, 'type title description correctChoice correctAnswer classes');
+    const res = await Exercise.find();
     return res;
 }
 
 exports.getById = async (id) => {
-    const res = await Exercise.findById(id, 'type title description correctChoice correctAnswer classes');
+    const res = await Exercise.findById(id);
     return res;
 }
 
 exports.getByClass = async (id) => {
     const res = await Exercise.find({
-        classes: id,
-        active: 'active'
-    }, 'type title description correctChoice correctAnswer classes');
+        classes: id
+    });
     return res;
 }
 
@@ -36,13 +33,8 @@ exports.update = async (id, data) => {
             choices: data.choices,
             correctChoice: data.correctChoice,
             correctAnswer: data.correctAnswer,
-            classes: data.classes
+            classes: data.classes,
+            active: data.active
         }
-    });
-}
-
-exports.active = async (id, data) => {
-    await Exercise.findByIdAndUpdate(id, {
-        $set: { active: data.active }
     });
 }

@@ -37,15 +37,9 @@ exports.update = async (req, res, next) => {
         await repository.update(req.params.id, {
             name: req.body.name,
             schedule: req.body.schedule,
-            daysOfWeek: req.body.daysOfWeek
+            daysOfWeek: req.body.daysOfWeek,
+            active: req.body.active
         });
-        res.status(200).send({ message: 'Turma atualizada com sucesso' });
-    } catch (e) { catchError(e, res); }
-}
-
-exports.active = async (req, res, next) => {
-    try {
-        await repository.active(req.params.id, { active: req.body.active });
         res.status(200).send({ message: 'Turma atualizada com sucesso' });
     } catch (e) { catchError(e, res); }
 }

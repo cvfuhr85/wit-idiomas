@@ -18,13 +18,8 @@ exports.update = async (id, data) => {
         $set: {
             name: data.name,
             schedule: data.schedule,
-            daysOfWeek: data.daysOfWeek
+            daysOfWeek: data.daysOfWeek,
+            active: data.active
         }
-    });
-}
-
-exports.active = async (id, data) => {
-    await Class.findByIdAndUpdate(id, {
-        $set: { active: data.active }
     });
 }
