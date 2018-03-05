@@ -61,15 +61,9 @@ exports.update = async (req, res, next) => {
             correctAnswer: req.body.correctAnswer,
             classes: req.body.classes,
             points: req.body.points,
-            duration: req.body.duration
+            duration: req.body.duration,
+            active: req.body.active
         });
-        res.status(200).send({ message: 'Desafio atualizado com sucesso' });
-    } catch (e) { catchError(e, res); }
-}
-
-exports.active = async (req, res, next) => {
-    try {
-        await repository.active(req.params.id, { active: req.body.active });
         res.status(200).send({ message: 'Desafio atualizado com sucesso' });
     } catch (e) { catchError(e, res); }
 }

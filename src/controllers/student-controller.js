@@ -97,7 +97,7 @@ exports.authenticate = async (req, res, next) => {
 };
 
 exports.update = async (req, res, next) => {
-    if (!validatorContract(req.body, res)) {
+    if (!validatorContractUpdate(req.body, res)) {
         return;
     }
 
@@ -121,38 +121,11 @@ exports.update = async (req, res, next) => {
         await repository.update(req.params.id, {
             name: req.body.name,
             email: req.body.email,
-            password: md5(req.body.password + global.SALT_KEY),
+            classes: req.body.classes,
+            active: req.body.active
             // photo: 'https://witteststorage.blob.core.windows.net/student-images/' + fileName
         });
         res.status(200).send({ message: 'Aluno atualizado com sucesso' });
-    } catch (e) { catchError(e, res); }
-}
-
-exports.active = async (req, res, next) => {
-    try {
-        await repository.active(req.params.id, { active: req.body.active });
-        res.status(200).send({ message: 'Aluno atualizada com sucesso' });
-    } catch (e) { catchError(e, res); }
-}
-
-exports.addPoints = async (req, res, next) => {
-    try {
-        await repository.addPoints(req.params.id, { points: req.body.points });
-        res.status(200).send({ message: 'Pontos atualizados com sucesso' });
-    } catch (e) { catchError(e, res); }
-}
-
-exports.addClass = async (req, res, next) => {
-    try {
-        await repository.addClass(req.params.id, { class: req.body.class });
-        res.status(200).send({ message: 'Aluno adicionado a turma com sucesso' });
-    } catch (e) { catchError(e, res); }
-}
-
-exports.removeClass = async (req, res, next) => {
-    try {
-        await repository.removeClass(req.params.id, { class: req.body.class });
-        res.status(200).send({ message: 'Aluno removido da turma com sucesso' });
     } catch (e) { catchError(e, res); }
 }
 
@@ -174,6 +147,19 @@ function validatorContract(data, res) {
     contract.isEmail(data.email, 'E-mail invalido')
     contract.hasMinLen(data.password, 6, 'A senha deve ter pelo menos 6 caracteres')
     contract.isEqual(data.password, data.confirmPassword, 'As senhas não conferem')
+
+    if (!contract.isValid()) {
+        res.status(400).send(contract.errors()).end();
+        return false;
+    }
+
+    return true;
+}
+
+function validatorContractUpdate(data, res) {
+    let contract = new ValidationContract();
+    contract.hasMinLen(data.name, 3, 'O nome deve ter pelo menos 3 caracteres')
+    contract.isEmail(data.email, 'E-mail invalido')
 
     if (!contract.isValid()) {
         res.status(400).send(contract.errors()).end();

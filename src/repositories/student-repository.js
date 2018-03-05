@@ -4,22 +4,19 @@ const mongoose = require('mongoose');
 const Student = mongoose.model('Student');
 
 exports.get = async () => {
-    const res = await Student.find({
-        active: 'active'
-    }, 'name email points');
+    const res = await Student.find();
     return res;
 }
 
 exports.getById = async (id) => {
-    const res = await Student.findById(id, 'name email points');
+    const res = await Student.findById(id);
     return res;
 }
 
 exports.getByClass = async (id) => {
     const res = await Student.find({
         classes: id,
-        active: 'active'
-    }, 'name email');
+    });
     return res;
 }
 
@@ -34,33 +31,9 @@ exports.update = async (id, data) => {
         $set: {
             name: data.name,
             email: data.email,
-            password: data.password,
-            photo: data.photo
+            classes: data.classes,
+            active: data.active
         }
-    });
-}
-
-exports.active = async (id, data) => {
-    await Student.findByIdAndUpdate(id, {
-        $set: { active: data.active }
-    });
-}
-
-exports.addPoints = async (id, data) => {
-    await Student.findByIdAndUpdate(id, {
-        $inc: { points: parseInt(data.points)}
-    });
-}
-
-exports.addClass = async (id, data) => {
-    await Student.findByIdAndUpdate(id, {
-        $push: {classes: data.class}
-    });
-}
-
-exports.removeClass = async (id, data) => {
-    await Student.findByIdAndUpdate(id, {
-        $pull: {classes: data.class}
     });
 }
 

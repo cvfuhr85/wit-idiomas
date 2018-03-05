@@ -4,9 +4,7 @@ const mongoose = require('mongoose');
 const Subject = mongoose.model('Subject');
 
 exports.get = async () => {
-    const res = await Subject.find({
-        active: 'active'
-    }, 'title link');
+    const res = await Subject.find();
     return res;
 }
 
@@ -17,9 +15,8 @@ exports.getById = async (id) => {
 
 exports.getByClass = async (id) => {
     const res = await Subject.find({
-        classes: id,
-        active: 'active'
-    }, 'title link type');
+        classes: id
+    });
     return res;
 }
 
@@ -32,13 +29,7 @@ exports.update = async (id, data) => {
     await Subject.findByIdAndUpdate(id, {
         $set: {
             title: data.title,
-            link: data.link
+            active: data.active
         }
-    });
-}
-
-exports.active = async (id, data) => {
-    await Subject.findByIdAndUpdate(id, {
-        $set: { active: data.active }
     });
 }
