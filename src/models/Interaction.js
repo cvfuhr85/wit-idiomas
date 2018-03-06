@@ -31,6 +31,11 @@ const schema = new Schema({
     challenge: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Challenge'
+    },
+    corrected: {
+        type: Boolean,
+        default: false
+        
     }
 });
 

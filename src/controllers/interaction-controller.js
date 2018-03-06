@@ -68,6 +68,16 @@ exports.create = async (req, res, next) => {
     } catch (e) { catchError(e, res); }
 };
 
+exports.corrected = async (req, res, next) => {
+    try {
+        console.log('1');
+        await repository.corrected(req.params.id, {
+            corrected: req.body.corrected
+        });
+        res.status(200).send({ message: 'Exercicio corrigido' });
+    } catch (e) { catchError(e, res); }
+}
+
 exports.delete = async (req, res, next) => {
     try {
         await repository.delete(req.params.id);

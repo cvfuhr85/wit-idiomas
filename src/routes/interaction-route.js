@@ -13,6 +13,7 @@ router.get('/answerclass/:classId/:exerciseId', authService.authorize, controlle
 router.get('/answerchallenge/:id', authService.authorize, controller.getAnswersChallenge);
 router.get('/correctanswer/:exerciseId/:studentId', authService.authorize, controller.getCorrectAnswer);
 router.post('/', authService.authorize, controller.create);
+router.put('/:id', authService.authorize, controller.corrected);
 router.delete('/:id', authService.authorize, controller.delete);
 
 module.exports = router; 

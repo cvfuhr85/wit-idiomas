@@ -40,7 +40,8 @@ exports.getAnswerByClass = async (classId, exerciseId) => {
     const res = await Interaction.find({
         type: 'answer',
         exercise: exerciseId,
-        class: classId
+        class: classId,
+        corrected: false
     }, 'exercise student text')
     .populate('student', 'name')
     .populate('exercise', 'title description');                                                                    
@@ -68,6 +69,16 @@ exports.getCorrectAnswer = async (exerciseId, studentId) => {
 exports.create = async (data) => {
     let interaction = new Interaction(data);
     await interaction.save();
+}
+
+exports.corrected = async (id, data) => {
+    await Interaction.findByIdAndUpdate(id, {
+        $set: {
+            corrected: data.corrected
+        }
+    });
+    console.log(id + '    ' + data.corrected);
+    
 }
 
 exports.delete = async (id) => {
