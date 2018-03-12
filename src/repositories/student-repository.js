@@ -38,10 +38,9 @@ exports.update = async (id, data) => {
 }
 
 exports.authenticate = async(data) => {
-    let res = await User.findOne({
+    let res = await Student.findOne({
         email: data.email,
         password: data.password
     });
-    
     return res;
 }
