@@ -91,7 +91,7 @@ exports.authenticate = async (req, res, next) => {
         });
 
     } catch (e) {
-        res.status(500).send({ message: 'Falha ao processar requisição' });
+        res.status(500).send({ message: 'Falha ao realizar o login.' });
     }
 
 };
