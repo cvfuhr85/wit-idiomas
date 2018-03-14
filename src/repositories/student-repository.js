@@ -22,7 +22,7 @@ exports.getByClass = async (id) => {
 
 exports.create = async (data) => {
     let student = new Student(data);
-    await student.save();
+    await student.save().populate('classes');
     return student;
 }
 
@@ -41,7 +41,7 @@ exports.authenticate = async(data) => {
     let res = await Student.findOne({
         email: data.email,
         password: data.password
-    });
+    }).populate('classes');
 
     return res;
 }
