@@ -42,5 +42,6 @@ exports.authenticate = async(data) => {
         email: data.email,
         password: data.password
     });
+
     return res;
 }

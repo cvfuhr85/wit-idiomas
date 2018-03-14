@@ -55,7 +55,8 @@ exports.create = async (req, res, next) => {
             token: token,
             data: {
                 name: student.name,
-                email: student.email
+                email: student.email,
+                classes: student.classes
             }
         });
 
@@ -64,6 +65,8 @@ exports.create = async (req, res, next) => {
 
 exports.authenticate = async (req, res, next) => {
     try {
+        console.log("1");
+        
         let student = await repository
             .authenticate({
                 email: req.body.email,
@@ -86,7 +89,8 @@ exports.authenticate = async (req, res, next) => {
             token: token,
             data: {
                 name: student.name,
-                email: student.email
+                email: student.email,
+                classes: student.classes
             }
         });
 
