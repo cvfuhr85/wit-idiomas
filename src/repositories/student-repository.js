@@ -9,7 +9,7 @@ exports.get = async () => {
 }
 
 exports.getById = async (id) => {
-    const res = await Student.findById(id);
+    const res = await Student.findById(id, 'classes active _id name email password');
     return res;
 }
 
