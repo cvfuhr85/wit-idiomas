@@ -56,7 +56,8 @@ exports.create = async (req, res, next) => {
             data: {
                 name: student.name,
                 email: student.email,
-                classes: student.classes
+                classes: student.classes,
+                _id: student._id
             }
         });
 
@@ -90,7 +91,8 @@ exports.authenticate = async (req, res, next) => {
             data: {
                 name: student.name,
                 email: student.email,
-                classes: student.classes
+                classes: student.classes,
+                _id: student._id
             }
         });
 
