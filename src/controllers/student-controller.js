@@ -126,9 +126,8 @@ exports.uploadPhoto = async (req, res, next) => {
 
         let fileName = guid.raw().toString() + '.jpg';
         let rawData = req.body.photo;
-        let matches = rawData.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-        let type = matches[1];
-        let buffer = new Buffer(matches[2], 'base64');
+        let type = 'data:image/jpeg;base64,';
+        let buffer = new Buffer(rawData, 'base64');
 
         await blobService.createBlockBlobFromText('student-images', fileName, buffer, {
             contentType: type
@@ -141,7 +140,7 @@ exports.uploadPhoto = async (req, res, next) => {
         await repository.uploadPhoto(req.params.id, {
             photo: 'https://witteststorage.blob.core.windows.net/student-images/' + fileName
         });
-        res.status(200).send({ message: 'Aluno atualizado com sucesso' });
+        res.status(200).send('https://witteststorage.blob.core.windows.net/student-images/' + fileName);
     } catch (e) { catchError(e, res); }
 }
 
