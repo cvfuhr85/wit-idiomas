@@ -59,7 +59,7 @@ exports.create = async (req, res, next) => {
                 type: req.body.type,
                 text: req.body.text,
                 student: req.body.student,
-                class: req.body.class,
+                class: req.body.course,
                 exercise: req.body.exercise,
                 subject: req.body.subject,
                 challenge: req.body.challenge
