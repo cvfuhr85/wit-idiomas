@@ -105,31 +105,15 @@ exports.authenticate = async (req, res, next) => {
 exports.update = async (req, res, next) => {
     if (!validatorContractUpdate(req.body, res)) {
         return;
-    }
-
-    // const blobService = azure.createBlobService(config.containerConnectionString);
-
-    // let fileName = guid.raw().toString() + '.jpg';
-    // let rawData = req.body.photo;
-    // let matches = rawData.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-    // let type = matches[1];
-    // let buffer = new Buffer(matches[2], 'base64');
-
-    // await blobService.createBlockBlobFromText('student-images', fileName, buffer, {
-    //     contentType: type
-    // }, function (error, result, response) {
-    //     if (error) {
-    //         fileName = 'default-student.png'
-    //     }
-    // });
+    }    
 
     try {
         await repository.update(req.params.id, {
             name: req.body.name,
             email: req.body.email,
             classes: req.body.classes,
-            active: req.body.active
-            // photo: 'https://witteststorage.blob.core.windows.net/student-images/' + fileName
+            active: req.body.active,
+            password: md5(req.body.password + global.SALT_KEY)
         });
         res.status(200).send({ message: 'Aluno atualizado com sucesso' });
     } catch (e) { catchError(e, res); }
@@ -166,6 +150,8 @@ function validatorContractUpdate(data, res) {
     let contract = new ValidationContract();
     contract.hasMinLen(data.name, 3, 'O nome deve ter pelo menos 3 caracteres')
     contract.isEmail(data.email, 'E-mail invalido')
+    contract.hasMinLen(data.password, 6, 'A senha deve ter pelo menos 6 caracteres')
+    contract.isEqual(data.password, data.confirmPassword, 'As senhas não conferem')
 
     if (!contract.isValid()) {
         res.status(400).send(contract.errors()).end();
@@ -174,3 +160,28 @@ function validatorContractUpdate(data, res) {
 
     return true;
 }
+
+
+
+
+
+
+
+
+    // const blobService = azure.createBlobService(config.containerConnectionString);
+
+    // let fileName = guid.raw().toString() + '.jpg';
+    // let rawData = req.body.photo;
+    // let matches = rawData.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+    // let type = matches[1];
+    // let buffer = new Buffer(matches[2], 'base64');
+
+    // await blobService.createBlockBlobFromText('student-images', fileName, buffer, {
+    //     contentType: type
+    // }, function (error, result, response) {
+    //     if (error) {
+    //         fileName = 'default-student.png'
+    //     }
+    // });
+
+    // photo: 'https://witteststorage.blob.core.windows.net/student-images/' + fileName

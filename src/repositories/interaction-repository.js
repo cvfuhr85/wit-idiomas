@@ -7,7 +7,7 @@ exports.getFavorite = async (id) => {
     const res = await Interaction.find({
         type: 'favorite',
         student: id
-    }, 'subject');
+    }, 'subject').populate('subject');
     return res;
 }
 
