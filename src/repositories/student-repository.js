@@ -22,7 +22,7 @@ exports.getByClass = async (id) => {
 
 exports.create = async (data) => {
     let student = new Student(data);
-    await student.save().populate('classes');
+    await student.save();
     return student;
 }
 
@@ -33,6 +33,14 @@ exports.update = async (id, data) => {
             email: data.email,
             classes: data.classes,
             active: data.active
+        }
+    });
+}
+
+exports.uploadPhoto = async (id, data) => {
+    await Student.findByIdAndUpdate(id, {
+        $set: {
+            photo: data.photo,
         }
     });
 }

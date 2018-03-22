@@ -11,5 +11,6 @@ router.get('/class/:id', authService.authorize, controller.getByClass);
 router.post('/', controller.create);
 router.post('/authenticate', controller.authenticate);
 router.put('/:id', authService.authorize, controller.update);
+router.put('/photo/:id', authService.authorize, controller.uploadPhoto);
 
 module.exports = router;
