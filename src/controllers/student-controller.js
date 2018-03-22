@@ -141,11 +141,7 @@ exports.uploadPhoto = async (req, res, next) => {
             photo: 'https://witteststorage.blob.core.windows.net/student-images/' + fileName
         });
 
-        res.status(202).send({ 
-            data: {
-                photo: student.photo
-            } 
-        });
+        res.status(202).send(student.photo);
 
     } catch (e) { catchError(e, res); }
 }
