@@ -38,11 +38,13 @@ exports.update = async (id, data) => {
 }
 
 exports.uploadPhoto = async (id, data) => {
-    await Student.findByIdAndUpdate(id, {
+    let res = await Student.findByIdAndUpdate(id, {
         $set: {
             photo: data.photo,
         }
     });
+
+    return res;    
 }
 
 exports.authenticate = async(data) => {
