@@ -60,9 +60,9 @@ exports.create = async (req, res, next) => {
                 text: req.body.text,
                 student: req.body.student,
                 class: req.body.course,
-                exercise: req.body.exercise,
-                subject: req.body.subject,
-                challenge: req.body.challenge
+                exercise: req.body.exercise
+                // subject: req.body.subject,
+                // challenge: req.body.challenge
             });
         res.status(201).send({ message: 'Interação cadastrada com sucesso' });
     } catch (e) { catchError(e, res); }
