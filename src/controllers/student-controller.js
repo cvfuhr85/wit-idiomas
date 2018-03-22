@@ -140,7 +140,13 @@ exports.uploadPhoto = async (req, res, next) => {
         let student = await repository.uploadPhoto(req.params.id, {
             photo: 'https://witteststorage.blob.core.windows.net/student-images/' + fileName
         });
-        res.status(200).send({ message: 'Aluno atualizado com sucesso', data: {photo: student.photo} });
+
+        res.status(202).send({ 
+            data: {
+                photo: student.photo
+            } 
+        });
+
     } catch (e) { catchError(e, res); }
 }
 
