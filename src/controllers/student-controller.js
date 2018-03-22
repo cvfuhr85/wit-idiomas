@@ -140,7 +140,7 @@ exports.uploadPhoto = async (req, res, next) => {
         await repository.uploadPhoto(req.params.id, {
             photo: 'https://witteststorage.blob.core.windows.net/student-images/' + fileName
         });
-        res.status(200).send('https://witteststorage.blob.core.windows.net/student-images/' + fileName);
+        res.status(200).send({ message: 'Aluno atualizado com sucesso', data: {photo: 'https://witteststorage.blob.core.windows.net/student-images/' + fileName} });
     } catch (e) { catchError(e, res); }
 }
 
