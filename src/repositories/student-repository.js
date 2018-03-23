@@ -37,6 +37,18 @@ exports.update = async (id, data) => {
     });
 }
 
+exports.updateMobile = async (id, data) => {
+    await Student.findByIdAndUpdate(id, {
+        $set: {
+            name: data.name,
+            email: data.email,
+            classes: data.classes,
+            active: data.active,
+            password: data.password
+        }
+    });
+}
+
 exports.uploadPhoto = async (id, data) => {
     let res = await Student.findByIdAndUpdate(id, {
         $set: {

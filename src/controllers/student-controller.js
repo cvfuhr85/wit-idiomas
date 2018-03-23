@@ -112,6 +112,21 @@ exports.update = async (req, res, next) => {
             name: req.body.name,
             email: req.body.email,
             classes: req.body.classes,
+            active: req.body.active
+        });
+        res.status(200).send({ message: 'Aluno atualizado com sucesso' });
+    } catch (e) { catchError(e, res); }
+}
+
+exports.updateMobile = async (req, res, next) => {
+    if (!validatorContract(req.body, res)) {
+        return;
+    }
+    try {
+        await repository.updateMobile(req.params.id, {
+            name: req.body.name,
+            email: req.body.email,
+            classes: req.body.classes,
             active: req.body.active,
             password: md5(req.body.password + global.SALT_KEY)
         });
@@ -133,7 +148,7 @@ exports.uploadPhoto = async (req, res, next) => {
             contentType: type
         }, function (error, result, response) {
             if (error) {
-                fileName = 'default-student.png'
+                fileName = 'default-student.jpeg'
             }
         });
 
@@ -173,8 +188,6 @@ function validatorContractUpdate(data, res) {
     let contract = new ValidationContract();
     contract.hasMinLen(data.name, 3, 'O nome deve ter pelo menos 3 caracteres')
     contract.isEmail(data.email, 'E-mail invalido')
-    contract.hasMinLen(data.password, 6, 'A senha deve ter pelo menos 6 caracteres')
-    contract.isEqual(data.password, data.confirmPassword, 'As senhas não conferem')
 
     if (!contract.isValid()) {
         res.status(400).send(contract.errors()).end();
