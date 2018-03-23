@@ -9,7 +9,7 @@ exports.get = async () => {
 }
 
 exports.getById = async (id) => {
-    const res = await Student.findById(id, 'classes active _id name email').populate('classes');;
+    const res = await Student.findById(id, 'classes active _id name email photo').populate('classes');;
     return res;
 }
 
