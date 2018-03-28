@@ -33,6 +33,7 @@ exports.create = async (req, res, next) => {
         await repository
             .create({
                 title: req.body.title,
+                description: req.body.description,
                 type: req.body.type,
                 link: req.body.link,
                 classes: req.body.classes
@@ -49,6 +50,7 @@ exports.update = async (req, res, next) => {
     try {
         await repository.update(req.params.id, {
             title: req.body.title,
+            description: req.body.description,            
             active: req.body.active
         });
         res.status(200).send({ message: 'Aula atualizada com sucesso' });

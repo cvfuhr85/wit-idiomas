@@ -29,6 +29,7 @@ exports.update = async (id, data) => {
     await Subject.findByIdAndUpdate(id, {
         $set: {
             title: data.title,
+            description: data.description,
             active: data.active
         }
     });
