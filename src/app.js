@@ -9,12 +9,7 @@ const mongoose = require('mongoose');
 const config = require('./config');
 
 //Connect DB
-mongoose.connect(config.connectionString, {
-    auth: {
-      user: config.userMongo,
-      password: config.passwordMongo
-    }
-  })
+mongoose.connect(config.connectionString)
   .then(() => console.log('connection successful'))
   .catch((err) => console.error(err));
   
