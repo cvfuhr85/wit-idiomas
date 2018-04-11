@@ -41,7 +41,7 @@ exports.create = async (req, res, next) => {
                 email: req.body.email,
                 password: md5(req.body.password + global.SALT_KEY),
                 roles: ['user'],
-                photo: 'https://witteststorage.blob.core.windows.net/student-images/default-student.png'
+                photo: 'https://witappstorage.blob.core.windows.net/student-images/default-student.png'
             });
 
         let token = await authService.generateToken({
@@ -153,7 +153,7 @@ exports.uploadPhoto = async (req, res, next) => {
         });
 
         let student = await repository.uploadPhoto(req.params.id, {
-            photo: 'https://witteststorage.blob.core.windows.net/student-images/' + fileName
+            photo: 'https://witappstorage.blob.core.windows.net/student-images/' + fileName
         });
 
         res.status(202).send(student.photo);
@@ -196,28 +196,3 @@ function validatorContractUpdate(data, res) {
 
     return true;
 }
-
-
-
-
-
-
-
-
-    // const blobService = azure.createBlobService(config.containerConnectionString);
-
-    // let fileName = guid.raw().toString() + '.jpg';
-    // let rawData = req.body.photo;
-    // let matches = rawData.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-    // let type = matches[1];
-    // let buffer = new Buffer(matches[2], 'base64');
-
-    // await blobService.createBlockBlobFromText('student-images', fileName, buffer, {
-    //     contentType: type
-    // }, function (error, result, response) {
-    //     if (error) {
-    //         fileName = 'default-student.png'
-    //     }
-    // });
-
-    // photo: 'https://witteststorage.blob.core.windows.net/student-images/' + fileName
